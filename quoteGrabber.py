@@ -24,22 +24,26 @@ import urllib2
 import sqlite3
 import datetime, time
 
-symbol='ATVI'
-info='abo'
-
+stocknumber=1
+symbol0='ATVI'
+info0='abo'
 today = datetime.date.today()
-
-for i in symbol
-	link=('http://finance.yahoo.com/d/quotes.csv?s=%s&f=%s',symbol(i),info(i))
+def download_data(symbol, info):
+	link='http://finance.yahoo.com/d/quotes.csv?s=%s&f=%s'%(symbol,info)
 	now = datetime.datetime.now()
-	data(i) = 'today, now, urllib2.urlopen(link)'
+	data= (today, now, symbol, urllib2.urlopen(link))
+	return data
+
+data=download_data(symbol0,info0)
+
+	
 
 conn = sqlite3.connect('Stocks.db')
 c = conn.cursor()
 
 # Create table
-c.execute('''CREATE TABLE stocks
-             (date text, time text, symbol text, ask real, bid real, open real)''')
+#c.execute('''CREATE TABLE stocks
+  #           (date text, time text, symbol text, ask real, bid real, open real)''')
 
 # Insert the data
 c.executemany('INSERT INTO stocks VALUES (?,?,?,?,?,?)', data)
@@ -47,4 +51,3 @@ c.executemany('INSERT INTO stocks VALUES (?,?,?,?,?,?)', data)
 # Save (commit) the changes
 conn.commit()
 conn.close()
-pause()
