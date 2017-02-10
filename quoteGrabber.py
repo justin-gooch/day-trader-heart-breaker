@@ -30,7 +30,7 @@ info='abo'
 today = datetime.date.today()
 
 for i in symbol
-	link=('http://finance.yahoo.com/d/quotes.csv?s=%s&f=%s,symbol(i),info(i)')
+	link=('http://finance.yahoo.com/d/quotes.csv?s=%s&f=%s',symbol(i),info(i))
 	now = datetime.datetime.now()
 	data(i) = 'today, now, urllib2.urlopen(link)'
 
@@ -42,8 +42,9 @@ c.execute('''CREATE TABLE stocks
              (date text, time text, symbol text, ask real, bid real, open real)''')
 
 # Insert the data
-c.executemany('INSERT INTO stocks VALUES (?,?,?,?,?)', data)
+c.executemany('INSERT INTO stocks VALUES (?,?,?,?,?,?)', data)
 
 # Save (commit) the changes
 conn.commit()
 conn.close()
+pause()
